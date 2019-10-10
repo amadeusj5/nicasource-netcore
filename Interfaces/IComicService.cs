@@ -9,6 +9,10 @@ namespace nicasource_netcore.Interfaces
 
         Task<ComicModel> getComicOfTheDay();
         
-        ComicViewModel transform(ComicModel comic, int? comicId = null);
+        Task<ComicViewModel> transformAsync(ComicModel comic, int? comicId = null);
+
+        string previousComicUrl(ComicModel comic, int? comicId = null);
+
+        Task<string> nextComicUrlAsync(int? comicId = null);
     }
 }

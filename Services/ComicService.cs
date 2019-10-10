@@ -18,20 +18,51 @@ namespace nicasource_netcore.Services
         {
             if (!id.HasValue)
             {
-                return transform(await getComicOfTheDay());
+                return await transformAsync(await getComicOfTheDay());
             }
 
-            return transform(new ComicModel());
+            var result = await _httpClientService.get<ComicModel>(string.Format("{0}/{1}/info.0.json", XKCD_URL, id));
+
+            return await transformAsync(result, id);
         }
 
         public async Task<ComicModel> getComicOfTheDay() => await _httpClientService.get<ComicModel>(XKCD_URL + "/info.0.json");
 
-        public ComicViewModel transform(ComicModel comic, int? comicId = null)
+        public async Task<ComicViewModel> transformAsync(ComicModel comic, int? comicId = null)
         {
             return new ComicViewModel
             {
-                Comic = comic
+                Comic = comic,
+                Previous = previousComicUrl(comic, comicId),
+                Next = await nextComicUrlAsync(comicId)
             };
+        }
+
+        public string previousComicUrl(ComicModel comic, int? comicId = null)
+        {
+            if (comicId.HasValue && comicId.Equals(1))
+            {
+                return string.Empty;
+            }
+
+            return string.Format("/comic/{0}", comic.Num - 1);
+        }
+
+        public async Task<string> nextComicUrlAsync(int? comicId = null)
+        {
+            if (!comicId.HasValue)
+            {
+                return string.Empty;
+            }
+
+            var todayComic = await getComicOfTheDay();
+
+            if (comicId.Equals(todayComic.Num))
+            {
+                return string.Empty;
+            }
+
+            return string.Format("/comic/{0}", comicId + 1);
         }
     }
 }
