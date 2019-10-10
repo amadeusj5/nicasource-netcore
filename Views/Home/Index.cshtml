@@ -1,8 +1,52 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ComicViewModel
+@{
+    ViewData["Title"] = Model.Comic.Title;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid">
+    <div class="justify-content-center row">
+        <div class="col-md-7">
+            <div class="card my-5 rounded-lg shadow-lg">
+                <div class="bg-white border-0 card-header pt-4 text-center">
+                    <h3 class="font-weight-bold mb-0">XKCD</h3>
+                    <p class="mb-0 text-muted">
+                        A webcomic of romance, sarcasm, math, and language.
+                    </p>
+                </div>
+
+                <hr class="bg-secondary mt-0 py-3" />
+
+                <div class="card-body">
+                    <h5 class="text-center">@Model.Comic.Title</h5>
+
+                    <figure class="mb-1">
+                        <img src="@Model.Comic.Img" class="d-block img-fluid m-auto" alt="@Model.Comic.SafeTitle">
+                        <figcaption class="mt-3 text-center text-muted">
+                            <small>@Model.Comic.Alt</small>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <div class="bg-white border-0 card-footer d-flex justify-content-between">
+                    <div>
+                        @if(!string.IsNullOrEmpty(Model.Previous))
+                        {
+                            <a href="@Model.Previous" class="btn btn-secondary btn-sm px-3 px-sm-4 text-white" role="button">
+                                PREVIOUS
+                            </a>
+                        }
+                    </div>
+
+                    <div>
+                        @if(!string.IsNullOrEmpty(Model.Next))
+                        {
+                            <a href="@Model.Next" class="btn btn-warning btn-sm px-4 px-sm-5 text-white" role="button">
+                                NEXT
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
