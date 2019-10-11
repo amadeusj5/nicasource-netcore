@@ -23,7 +23,7 @@ namespace nicasource_netcore.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        [Route("comic/{id:int}")]
+        [Route("Comic/{id:int}")]
         public async Task<IActionResult> get(int id)
         {
             ComicViewModel comic;

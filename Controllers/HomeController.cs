@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using nicasource_netcore.Interfaces;
+using nicasource_netcore.Models;
 
 namespace nicasource_netcore.Controllers
 {
@@ -18,7 +20,19 @@ namespace nicasource_netcore.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _comicService.getAsync());
+            return View("~/Views/Comic/Index.cshtml", await _comicService.getAsync());
+        }
+
+        [Route("Home")]
+        public IActionResult Home()
+        {
+            return RedirectToAction("index");
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
