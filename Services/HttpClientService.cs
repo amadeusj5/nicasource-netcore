@@ -9,20 +9,18 @@ namespace nicasource_netcore.Services
     public class HttpClientService : IHttpClientService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IHttpClientFactory _clientFactory;
+        private readonly HttpClient _clientFactory;
 
-        public HttpClientService(IHttpContextAccessor httpContextAccessor, IHttpClientFactory clientFactory)
+        public HttpClientService()
         {
-            _httpContextAccessor = httpContextAccessor;
-            _clientFactory = clientFactory;
+            _httpContextAccessor = new HttpContextAccessor();
+            _clientFactory = new HttpClient();
         }
 
         public async Task<T> get<T>(string url)
         {
-            var client = _clientFactory.CreateClient();
-
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            var response = await client.SendAsync(request);
+            var response = await _clientFactory.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {

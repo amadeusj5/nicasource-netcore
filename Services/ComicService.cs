@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using nicasource_netcore.Interfaces;
 using nicasource_netcore.Models;
 
@@ -9,12 +8,12 @@ namespace nicasource_netcore.Services
 {
     public class ComicService : IComicService
     {
-        private readonly IHttpClientService _httpClientService;
+        private readonly HttpClientService _httpClientService;
         private const string XKCD_URL = "https://xkcd.com";
 
-        public ComicService(IHttpClientService httpClientService)
+        public ComicService()
         {
-            _httpClientService = httpClientService;
+            _httpClientService = new HttpClientService();
         }
 
         public async Task<ComicViewModel> getAsync(int? id = null)

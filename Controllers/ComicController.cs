@@ -24,7 +24,7 @@ namespace nicasource_netcore.Controllers
         }
 
         [Route("Comic/{id:int}")]
-        public async Task<IActionResult> get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             ComicViewModel comic;
 
