@@ -5,5 +5,7 @@ namespace nicasource_netcore.Interfaces
     public interface IHttpClientService
     {
         Task<T> get<T>(string url);
+        
+        string getPreviousRequest();
     }
 }

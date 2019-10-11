@@ -14,5 +14,7 @@ namespace nicasource_netcore.Interfaces
         string previousComicUrl(ComicModel comic, int? comicId = null);
 
         Task<string> nextComicUrlAsync(int? comicId = null);
+        
+        int? getPreviouslyRequestedComicId();
     }
 }

@@ -22,6 +22,7 @@ namespace nicasource_netcore
         {
             services.AddControllersWithViews();
             services.AddHttpClient();
+            services.AddHttpContextAccessor();
 
             services.AddScoped<IComicService, ComicService>();
             services.AddScoped<IHttpClientService, HttpClientService>();

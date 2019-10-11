@@ -1,13 +1,15 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using nicasource_netcore.Interfaces;
+using nicasource_netcore.Models;
 
 namespace nicasource_netcore.Controllers
 {
     public class ComicController : Controller
     {
-         private readonly IComicService _comicService;
+        private readonly IComicService _comicService;
         private readonly ILogger<HomeController> _logger;
 
         public ComicController(ILogger<HomeController> logger, IComicService comicService)
@@ -24,7 +26,18 @@ namespace nicasource_netcore.Controllers
         [Route("comic/{id:int}")]
         public async Task<IActionResult> get(int id)
         {
-            return View("~/Views/Comic/Index.cshtml", await _comicService.getAsync(id));
+            ComicViewModel comic;
+
+            try
+            {
+                comic = await _comicService.getAsync(id);
+            }
+            catch (ArgumentNullException e)
+            {
+                return Redirect(e.ParamName);
+            }
+
+            return View("~/Views/Comic/Index.cshtml", comic);
         }
     }
 }
