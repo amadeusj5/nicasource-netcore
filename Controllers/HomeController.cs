@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using nicasource_netcore.Interfaces;
-using nicasource_netcore.Models;
 
 namespace nicasource_netcore.Controllers
 {
